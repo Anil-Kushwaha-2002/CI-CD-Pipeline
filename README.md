@@ -25,14 +25,14 @@
 ## 4. Monitor & Rollback if failure.
 
 # 3. Example Flow
-Developer → Git Push → CI (Test + Build + Docker Image) → Push to Registry → CD (Deploy to Staging → Prod) → Monitoring → Rollback if needed.
+**Developer → Git Push → CI (Test + Build + Docker Image) → Push to Registry → CD (Deploy to Staging → Prod) → Monitoring → Rollback if needed.**
 
 # 4. Tools
-- Version Control: GitHub, GitLab, Bitbucket
-- CI/CD: GitHub Actions, Jenkins, GitLab CI, CircleCI
-- Artifacts Repositories: DockerHub, Nexus, AWS ECR, JFrog Artifactory
-- Infra/Deploy: Docker, Kubernetes, Terraform, Ansible, AWS/GCP/Azure
-- Monitoring: Prometheus, Grafana, ELK, Datadog
+- **Version Control:** GitHub, GitLab, Bitbucket
+- **CI/CD:** GitHub Actions, Jenkins, GitLab CI, CircleCI
+- **Artifacts Repositories:** DockerHub, Nexus, AWS ECR, JFrog Artifactory
+- **Infra/Deploy:** Docker, Kubernetes, Terraform, Ansible, AWS/GCP/Azure
+- **Monitoring:** Prometheus, Grafana, ELK, Datadog
 
 # 5. Key Concepts
 ```
@@ -60,7 +60,7 @@ A reusable piece of code that performs a task (e.g., checkout code, setup Node, 
 - Whenever something happens in my repo, do this set of tasks automatically.
 ## 1. Workflow in GitHub Actions
 A workflow is an automation pipeline you define in a `.yml` file inside:
-`.github/workflows/`
+- `.github/workflows/`
 ## 2. Example Workflows
 ## 🟢 Example 1: CI (Test on Every Push) 
 `.github/workflows/ci.yml`
@@ -123,33 +123,74 @@ jobs:
 - Pulls latest code.
 - Restarts app service.
   
-## 🟢 Example 3: CI/CD Workflow (Combined)
-`.github/workflows/ci-cd.yml`
+## 🟢 Example 3: CI/CD Workflow for Python (Combined)
+📌 Save this file as:
+`.github/workflows/python-ci-cd.yml`
 ```
-name: CI/CD Pipeline
+name: Python CI/CD Pipeline
 
 on:
   push:
+    branches: [ main, dev ]
+  pull_request:
     branches: [ main ]
 
 jobs:
-  build-test:
+  # ---------------------------
+  # 1. Continuous Integration (Build, Lint, Test)
+  # ---------------------------
+  ci:
     runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v4
-      - uses: actions/setup-node@v4
-        with:
-          node-version: '18'
-      - run: npm install
-      - run: npm test
+    strategy:
+      matrix:
+        python-version: [ "3.9", "3.10", "3.11" ]   # Test across multiple Python versions
 
-  deploy:
-    runs-on: ubuntu-latest
-    needs: build-test
     steps:
-      - uses: actions/checkout@v4
-      - name: Deploy to Vercel
-        run: npx vercel --prod --token=${{ secrets.VERCEL_TOKEN }}
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Set up Python ${{ matrix.python-version }}
+        uses: actions/setup-python@v5
+        with:
+          python-version: ${{ matrix.python-version }}
+
+      - name: Install dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install -r requirements.txt
+          pip install pytest flake8 black
+
+      - name: Run Linter (flake8)
+        run: flake8 .
+
+      - name: Check code formatting (black)
+        run: black --check .
+
+      - name: Run Tests
+        run: pytest --maxfail=1 --disable-warnings -q
+
+  # ---------------------------
+  # 2. Continuous Deployment (Deploy only from main branch)
+  # ---------------------------
+  cd:
+    runs-on: ubuntu-latest
+    needs: ci   # Run only if CI job passes
+    if: github.ref == 'refs/heads/main'   # Deploy only when merged into main
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Deploy to Server
+        run: |
+          echo "Starting Deployment..."
+          ssh -o StrictHostKeyChecking=no -i ${{ secrets.SSH_KEY }} ${{ secrets.SERVER_USER }}@${{ secrets.SERVER_IP }} "
+          cd /var/www/myapp &&
+          git pull origin main &&
+          source venv/bin/activate &&
+          pip install -r requirements.txt &&
+          systemctl restart myapp
+          "
 ```
 🔎 Here:
 - Job 1: build-test → runs tests.
