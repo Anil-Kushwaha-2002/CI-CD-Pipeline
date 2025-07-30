@@ -134,70 +134,85 @@ jobs:
 📌 Save this file as:
 - `.github/workflows/python-ci-cd.yml`
 ```
+# ---------------------------
+# GitHub Actions Workflow for Python Project
+# Performs CI (lint, test) and CD (deploy to server)
+# ---------------------------
+
 name: Python CI/CD Pipeline
 
 on:
   push:
-    branches: [ main, dev ]
+    branches: [ main, dev ]      # Run pipeline when pushing to main or dev
   pull_request:
-    branches: [ main ]
+    branches: [ main ]           # Run checks when PR is opened against main
 
 jobs:
   # ---------------------------
-  # 1. Continuous Integration (Build, Lint, Test)
+  # 1. Continuous Integration (CI) Job
   # ---------------------------
   ci:
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-latest       # Use latest Ubuntu runner
     strategy:
       matrix:
-        python-version: [ "3.9", "3.10", "3.11" ]   # Test across multiple Python versions
+        python-version: [ "3.9", "3.10", "3.11" ]   # Test against multiple Python versions
 
     steps:
+      # Step 1: Get code from repo
       - name: Checkout repository
         uses: actions/checkout@v4
 
+      # Step 2: Set up Python environment
       - name: Set up Python ${{ matrix.python-version }}
         uses: actions/setup-python@v5
         with:
           python-version: ${{ matrix.python-version }}
 
+      # Step 3: Install dependencies
       - name: Install dependencies
         run: |
-          python -m pip install --upgrade pip
-          pip install -r requirements.txt
-          pip install pytest flake8 black
+          python -m pip install --upgrade pip      # Upgrade pip
+          pip install -r requirements.txt          # Install project dependencies
+          pip install pytest flake8 black          # Install testing and linting tools
 
+      # Step 4: Run linting check with flake8
       - name: Run Linter (flake8)
         run: flake8 .
 
+      # Step 5: Check code formatting with black
       - name: Check code formatting (black)
         run: black --check .
 
+      # Step 6: Run unit tests with pytest
       - name: Run Tests
         run: pytest --maxfail=1 --disable-warnings -q
 
   # ---------------------------
-  # 2. Continuous Deployment (Deploy only from main branch)
+  # 2. Continuous Deployment (CD) Job
   # ---------------------------
   cd:
     runs-on: ubuntu-latest
-    needs: ci   # Run only if CI job passes
-    if: github.ref == 'refs/heads/main'   # Deploy only when merged into main
+    needs: ci                               # Run only if CI job succeeds
+    if: github.ref == 'refs/heads/main'     # Deploy only when pushing to main branch
 
     steps:
+      # Step 1: Checkout repo again (not strictly needed, but good practice)
       - name: Checkout repository
         uses: actions/checkout@v4
 
+      # Step 2: Deploy to remote server
       - name: Deploy to Server
         run: |
-          echo "Starting Deployment..."
-          ssh -o StrictHostKeyChecking=no -i ${{ secrets.SSH_KEY }} ${{ secrets.SERVER_USER }}@${{ secrets.SERVER_IP }} "
-          cd /var/www/myapp &&
-          git pull origin main &&
-          source venv/bin/activate &&
-          pip install -r requirements.txt &&
-          systemctl restart myapp
+          echo "🚀 Starting Deployment..."
+          ssh -o StrictHostKeyChecking=no -i ${{ secrets.SSH_KEY }} \
+             ${{ secrets.SERVER_USER }}@${{ secrets.SERVER_IP }} "
+             cd /var/www/myapp &&                          # Go to app folder
+             git pull origin main &&                       # Pull latest code
+             source venv/bin/activate &&                   # Activate virtualenv
+             pip install -r requirements.txt &&            # Update dependencies
+             systemctl restart myapp                       # Restart app service
           "
+
 ```
 🔎 Here:
 - Job 1: build-test → runs tests.
