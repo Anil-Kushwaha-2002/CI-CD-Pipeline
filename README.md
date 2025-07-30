@@ -1,5 +1,6 @@
 # CI-CD-Pipeline
-# 1. CI/CD -💡 Goal: Faster, automated, reliable software delivery with minimum manual work.
+# 1. CI/CD 
+**💡 Goal:** Faster, automated, reliable software delivery with minimum manual work.
 ## CI (Continuous Integration):
 - Developers push code → code is automatically tested, built, and integrated with main branch.
 - CI → build + test automation.
@@ -10,7 +11,8 @@
 
 # 2. Workflow
 **Workflow →** *YAM*L file that defines CI/CD logic in GitHub Actions.
-## 1. Developer Code Commit → Git Repo (GitHub, GitLab, Bitbucket)
+## 1. Developer 
+Code Commit → Git Repo (GitHub, GitLab, Bitbucket)
 ## 2. CI Pipeline:
 - Checkout code
 - Install dependencies
@@ -22,19 +24,13 @@
 - Run integration tests
 - (Optional) Approval step
 - Deploy to production
-## 4. Monitor & Rollback if failure.
+## 4. Monitor & Rollback 
+if failure.
 
 # 3. Example Flow
 **Developer → Git Push → CI (Test + Build + Docker Image) → Push to Registry → CD (Deploy to Staging → Prod) → Monitoring → Rollback if needed.**
 
-# 4. Tools
-- **Version Control:** GitHub, GitLab, Bitbucket
-- **CI/CD:** GitHub Actions, Jenkins, GitLab CI, CircleCI
-- **Artifacts Repositories:** DockerHub, Nexus, AWS ECR, JFrog Artifactory
-- **Infra/Deploy:** Docker, Kubernetes, Terraform, Ansible, AWS/GCP/Azure
-- **Monitoring:** Prometheus, Grafana, ELK, Datadog
-
-# 5. Key Concepts
+# 4. Key Concepts
 ```
 # 1. Workflow
 Automated process defined in .github/workflows/ folder.
@@ -55,6 +51,14 @@ GitHub provides free runners (Linux, Windows, macOS). You can also self-host.
 # 5.Action
 A reusable piece of code that performs a task (e.g., checkout code, setup Node, deploy).
 ```
+# 5. Tools
+- **Version Control:-** GitHub, GitLab, Bitbucket
+- **CI/CD:-** GitHub Actions, Jenkins, GitLab CI, CircleCI
+- **Artifacts Repositories:-** DockerHub, Nexus, AWS ECR, JFrog Artifactory
+- **Infra/Deploy:-** Docker, Kubernetes, Terraform, Ansible, AWS/GCP/Azure
+- **Monitoring:-** Prometheus, Grafana, ELK, Datadog
+---
+---
 # 1. GitHub Actions
 - GitHub Actions is an automation platform built into GitHub.
 - Whenever something happens in my repo, do this set of tasks automatically.
@@ -91,7 +95,7 @@ jobs:
       - name: Run tests
         run: pytest
 ```
-## 🔎 What happens here:
+ 🔎 What happens here:
 - Runs whenever someone pushes or creates PR to main.
 - Checks out repo → installs dependencies → runs tests.
    
@@ -118,7 +122,7 @@ jobs:
           git pull origin main &&
           systemctl restart myapp"
 ```
-## 🔎 Here:
+🔎 Here:
 - On push to main, it SSHs into your server.
 - Pulls latest code.
 - Restarts app service.
@@ -203,6 +207,8 @@ jobs:
 - Free usage (2,000–3,000 minutes/month).
 - Marketplace with 10,000+ ready-made actions.
 
+--
+--
 # 2. Jenkins CI/CD Pipeline
 Jenkins is a self-hosted automation server. You install Jenkins on your server/VM.
 
