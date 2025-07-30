@@ -132,7 +132,7 @@ jobs:
   
 ## 🟢 Example 3: CI/CD Workflow for Python (Combined)
 📌 Save this file as:
-`.github/workflows/python-ci-cd.yml`
+- `.github/workflows/python-ci-cd.yml`
 ```
 name: Python CI/CD Pipeline
 
@@ -210,8 +210,8 @@ jobs:
 - Free usage (2,000–3,000 minutes/month).
 - Marketplace with 10,000+ ready-made actions.
 
---
---
+---
+---
 # 2. CI/CD with Jenkins
 Jenkins is a self-hosted automation server. You install Jenkins on your server/VM.
 
