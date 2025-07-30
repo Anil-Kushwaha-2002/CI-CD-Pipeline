@@ -59,13 +59,16 @@ A reusable piece of code that performs a task (e.g., checkout code, setup Node, 
 - **Monitoring:-** Prometheus, Grafana, ELK, Datadog
 ---
 ---
-# 1. GitHub Actions
+
+# 1. CI/CD with GitHub Actions
 - GitHub Actions is an automation platform built into GitHub.
 - Whenever something happens in my repo, do this set of tasks automatically.
+
 ## 1. Workflow in GitHub Actions
-A workflow is an automation pipeline you define in a `.yml` file inside:
-- `.github/workflows/`
-## 2. Example Workflows
+- **Definition:--** GitHub’s built-in CI/CD service.
+- **Workflow--** = `YAML` file (`.github/workflows/ci-cd.yml`).
+- **Runs on Events:--** push, pull_request, schedule, etc.
+
 ## 🟢 Example 1: CI (Test on Every Push) 
 `.github/workflows/ci.yml`
 ```
@@ -209,20 +212,16 @@ jobs:
 
 --
 --
-# 2. Jenkins CI/CD Pipeline
+# 2. CI/CD with Jenkins
 Jenkins is a self-hosted automation server. You install Jenkins on your server/VM.
 
 ## Pipeline Steps
-- 1.Developer pushes code to GitHub.
-- 2.Jenkins (via webhook) detects new push.
-- 3.Jenkins pipeline executes stages:-
--  -Checkout repo
--  -Install dependencies
--  -Run tests
--  -Build artifact (JAR/Docker image)
--  -Push artifact to registry
--  -Deploy to server/Kubernetes
-Example (Jenkinsfile)
+- **Definition:--** Open-source automation server for CI/CD.
+- **Jenkins Pipeline:--** Scripted workflow (Jenkinsfile).
+- **Plugins:--** Integrate with GitHub, Docker, Kubernetes, etc.
+
+👉 Basic (Jenkinsfile) Example
+
 ```
 pipeline {
     agent any
@@ -274,6 +273,14 @@ pipeline {
 | Scalability   | Limited to GitHub runners | Very scalable (distributed agents)                  |
 | Integration   | Native with GitHub        | Works with any VCS (GitHub, GitLab, Bitbucket, SVN) |
 | Best Use Case | Small/medium projects     | Large/enterprise projects                           |
+
+# CI/CD Workflow (General)
+- **Code Commit →** Developer pushes code to GitHub (or Git).
+- **Build →** CI server (Jenkins/GitHub Actions) compiles and builds.
+- **Test →** Run automated tests (unit, integration, security).
+- **Package →** Create artifacts (Docker images, .jar/.war, etc.).
+- **Deploy →** Push to staging/prod server, Kubernetes, or cloud.
+- **Monitor →** Logs, metrics, alerting.
 
 
 
