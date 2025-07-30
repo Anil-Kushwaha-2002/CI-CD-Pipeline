@@ -1,5 +1,5 @@
 # CI-CD-Pipeline
-# 1. CI/CD
+# 1. CI/CD -💡 Goal: Faster, automated, reliable software delivery with minimum manual work.
 ## CI (Continuous Integration):
 - Developers push code → code is automatically tested, built, and integrated with main branch.
 - CI → build + test automation.
@@ -8,10 +8,8 @@
 - After CI passes → code is automatically deployed to a server (staging/production).
 - CD → deploy automation.
 
-- 💡 Goal: Faster, automated, reliable software delivery with minimum manual work.
-- Workflow → YAML file that defines CI/CD logic in GitHub Actions.
-
 # 2. Workflow
+**Workflow →** *YAM*L file that defines CI/CD logic in GitHub Actions.
 ## 1. Developer Code Commit → Git Repo (GitHub, GitLab, Bitbucket)
 ## 2. CI Pipeline:
 - Checkout code
@@ -64,7 +62,8 @@ A reusable piece of code that performs a task (e.g., checkout code, setup Node, 
 A workflow is an automation pipeline you define in a `.yml` file inside:
 `.github/workflows/`
 ## 2. Example Workflows
-🟢 Example 1: CI (Test on Every Push) `.github/workflows/ci.yml`
+## 🟢 Example 1: CI (Test on Every Push) 
+`.github/workflows/ci.yml`
 ```
 name: CI Pipeline
 
@@ -96,7 +95,7 @@ jobs:
 - Runs whenever someone pushes or creates PR to main.
 - Checks out repo → installs dependencies → runs tests.
    
-🟢 Example 2: CD (Deploy to AWS EC2 After CI) 
+## 🟢 Example 2: CD (Deploy to AWS EC2 After CI) 
 `.github/workflows/cd.yml`
 ```
 name: Deploy to AWS
@@ -152,12 +151,12 @@ jobs:
       - name: Deploy to Vercel
         run: npx vercel --prod --token=${{ secrets.VERCEL_TOKEN }}
 ```
-## 🔎 Here:
+🔎 Here:
 - Job 1: build-test → runs tests.
 - Job 2: deploy → runs only if build-test passes.
 - Deploys to Vercel automatically.
 
-# 3. 🚀 Benefits of GitHub Actions
+## 3. 🚀 Benefits of GitHub Actions
 - Integrated with GitHub (no extra setup).
 - Supports Linux, Windows, macOS.
 - Free usage (2,000–3,000 minutes/month).
@@ -167,15 +166,15 @@ jobs:
 Jenkins is a self-hosted automation server. You install Jenkins on your server/VM.
 
 ## Pipeline Steps
-- 1. Developer pushes code to GitHub.
-- 2. Jenkins (via webhook) detects new push.
-- 3. Jenkins pipeline executes stages:-
-- Checkout repo
-- Install dependencies
-- Run tests
-- Build artifact (JAR/Docker image)
-- Push artifact to registry
-- Deploy to server/Kubernetes
+- 1.Developer pushes code to GitHub.
+- 2.Jenkins (via webhook) detects new push.
+- 3.Jenkins pipeline executes stages:-
+-  -Checkout repo
+-  -Install dependencies
+-  -Run tests
+-  -Build artifact (JAR/Docker image)
+-  -Push artifact to registry
+-  -Deploy to server/Kubernetes
 Example (Jenkinsfile)
 ```
 pipeline {
@@ -219,7 +218,7 @@ pipeline {
 ```
 ✅ More customizable, best for enterprise-scale projects.
 
-Key Differences b/w GitHub Actions and Jenkins
+# Key Differences b/w GitHub Actions and Jenkins
 | Feature       | GitHub Actions 🚀         | Jenkins ⚙️                                          |
 | ------------- | ------------------------- | --------------------------------------------------- |
 | Hosting       | Cloud (GitHub-hosted)     | Self-hosted (your server/VM)                        |
