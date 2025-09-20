@@ -1,30 +1,31 @@
-# CI-CD-Pipeline
+# CI-CD-Pipeline ( GitHub Actions and Jenkins )
+
 # 1. CI/CD 
 **💡 Goal:** Faster, automated, reliable software delivery with minimum manual work.
-## CI (Continuous Integration):
+### CI (Continuous Integration):
 - Developers push code → code is automatically tested, built, and integrated with main branch.
 - CI → build + test automation.
 
-## CD (Continuous Delivery/Deployment):
+### CD (Continuous Delivery/Deployment):
 - After CI passes → code is automatically deployed to a server (staging/production).
 - CD → deploy automation.
 ---
 # 2. Workflow
 **Workflow →** *YAM*L file that defines CI/CD logic in GitHub Actions.
-## 1. Developer 
+### 1. Developer 
 Code Commit → Git Repo (GitHub, GitLab, Bitbucket)
-## 2. CI Pipeline:
+### 2. CI Pipeline:
 - Checkout code
 - Install dependencies
 - Linting & Testing
 - Build artifact (e.g., Docker image)
 - Store in registry
-## 3. CD Pipeline:
+### 3. CD Pipeline:
 - Deploy to staging
 - Run integration tests
 - (Optional) Approval step
 - Deploy to production
-## 4. Monitor & Rollback 
+### 4. Monitor & Rollback 
 if failure.
 ---
 # 3. Example Flow
@@ -63,12 +64,12 @@ A reusable piece of code that performs a task (e.g., checkout code, setup Node, 
 - GitHub Actions is an automation platform built into GitHub.
 - Whenever something happens in my repo, do this set of tasks automatically.
 
-## 1. Workflow in GitHub Actions
+### 1. Workflow in GitHub Actions
 - **Definition:--** GitHub’s built-in CI/CD service.
 - **Workflow--** = `YAML` file (`.github/workflows/ci-cd.yml`).
 - **Runs on Events:--** push, pull_request, schedule, etc.
 
-## 🟢 Example 1: CI (Test on Every Push) 
+### 🟢 Example 1: CI (Test on Every Push) 
 `.github/workflows/ci.yml`
 ```
 name: CI Pipeline
@@ -101,7 +102,7 @@ jobs:
 - Runs whenever someone pushes or creates PR to main.
 - Checks out repo → installs dependencies → runs tests.
    
-## 🟢 Example 2: CD (Deploy to AWS EC2 After CI) 
+### 🟢 Example 2: CD (Deploy to AWS EC2 After CI) 
 `.github/workflows/cd.yml`
 ```
 name: Deploy to AWS
@@ -129,7 +130,7 @@ jobs:
 - Pulls latest code.
 - Restarts app service.
   
-## 🟢 Example 3: CI/CD Workflow for Python (Combined)
+### 🟢 Example 3: CI/CD Workflow for Python (Combined)
 📌 Save this file as:
 - `.github/workflows/python-ci-cd.yml`
 ```
