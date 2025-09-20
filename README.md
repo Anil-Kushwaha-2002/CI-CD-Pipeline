@@ -8,7 +8,7 @@
 ## CD (Continuous Delivery/Deployment):
 - After CI passes → code is automatically deployed to a server (staging/production).
 - CD → deploy automation.
-
+---
 # 2. Workflow
 **Workflow →** *YAM*L file that defines CI/CD logic in GitHub Actions.
 ## 1. Developer 
@@ -26,7 +26,7 @@ Code Commit → Git Repo (GitHub, GitLab, Bitbucket)
 - Deploy to production
 ## 4. Monitor & Rollback 
 if failure.
-
+---
 # 3. Example Flow
 **Developer → Git Push → CI (Test + Build + Docker Image) → Push to Registry → CD (Deploy to Staging → Prod) → Monitoring → Rollback if needed.**
 
@@ -59,7 +59,6 @@ A reusable piece of code that performs a task (e.g., checkout code, setup Node, 
 - **Monitoring:-** Prometheus, Grafana, ELK, Datadog
 ---
 ---
-
 # 1. CI/CD with GitHub Actions
 - GitHub Actions is an automation platform built into GitHub.
 - Whenever something happens in my repo, do this set of tasks automatically.
